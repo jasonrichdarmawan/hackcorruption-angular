@@ -58,7 +58,6 @@ export class CTFilterYearComponent implements OnInit {
       queryParams["year"] = this.year;
     }
 
-
     router.navigate(
       [],
       {
