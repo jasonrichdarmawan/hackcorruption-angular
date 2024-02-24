@@ -1,5 +1,5 @@
 <button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
-  <span>{{ selectedFilter === 'All Type Subject' ? 'Type' : selectedFilter }}</span>
+  <span>{{ selectedFilter === 'All Type Subject' ? 'Type Subject' : selectedFilter }}</span>
   <mat-icon [fontIcon]="isMenuOpened ? 'expand_more' : 'expand_less'"></mat-icon>
 </button>
 <mat-menu #menu="matMenu" (click)="$event.stopPropagation();">

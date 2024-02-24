@@ -1,0 +1,3 @@
+<input class="Subject" placeholder="Subject" [value]="keyword"
+  (keyup.enter)="updateQueryParams(searchInput.value, router)" #searchInput>
+<button (click)="updateQueryParams(searchInput.value, router)">Search</button>
