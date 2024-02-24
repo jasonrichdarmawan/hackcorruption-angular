@@ -99,6 +99,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "hackcorruption-angular:build:production",
+              "serveTarget": "hackcorruption-angular:serve:production"
+            },
+            "development": {
+              "buildTarget": "hackcorruption-angular:build:development",
+              "serveTarget": "hackcorruption-angular:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

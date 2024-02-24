@@ -1,0 +1,11 @@
+{
+  "hosting": [
+    {
+      "target": "hackcorruption-angular",
+      "source": ".",
+      "frameworksBackend": {
+        "region": "asia-east1"
+      }
+    }
+  ]
+}
