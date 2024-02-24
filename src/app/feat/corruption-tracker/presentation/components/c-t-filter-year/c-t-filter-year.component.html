@@ -1,0 +1,15 @@
+<button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
+  <span>Year</span>
+  <mat-icon [fontIcon]="isMenuOpened ? 'expand_more' : 'expand_less'"></mat-icon>
+</button>
+<mat-menu #menu="matMenu" (click)="$event.stopPropagation();">
+  <div (keydown.enter)="onInputBlur(inputYear); updateQueryParams(year, activatedRoute, router)"
+    (click)="$event.stopPropagation();">
+    <span>Year</span>
+    <input #inputYear type="number" min="1900" max="2100" [value]="year" placeholder="Year"
+      (blur)="onInputBlur(inputYear); updateQueryParams(year, activatedRoute, router);">
+    @if (!inputYear.validity.valid) {
+    <span>{{ inputYear.validationMessage }}</span>
+    }
+  </div>
+</mat-menu>
