@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CTFilterTypeComponent } from './c-t-filter-type.component';
+import { CTFilterNationComponent } from './c-t-filter-nation.component';
 
-describe('CTFilterTypeComponent', () => {
-  let component: CTFilterTypeComponent;
-  let fixture: ComponentFixture<CTFilterTypeComponent>;
+describe('CTFilterNationComponent', () => {
+  let component: CTFilterNationComponent;
+  let fixture: ComponentFixture<CTFilterNationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CTFilterTypeComponent]
+      imports: [CTFilterNationComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CTFilterTypeComponent);
+    fixture = TestBed.createComponent(CTFilterNationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

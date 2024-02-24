@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-export type FilterType = "All Type" | "Verdict" | "Black List" | "Sanction";
+export type FilterTypeSubject = "All Type Subject" | "Verdict" | "Black List" | "Sanction";
 
 @Component({
   selector: 'app-c-t-filter-type',
@@ -13,38 +13,38 @@ export type FilterType = "All Type" | "Verdict" | "Black List" | "Sanction";
     MatIconModule,
     RouterLink,
   ],
-  templateUrl: './c-t-filter-type.component.html',
-  styleUrl: './c-t-filter-type.component.scss'
+  templateUrl: './c-t-filter-type-subject.component.html',
+  styleUrl: './c-t-filter-type-subject.component.scss'
 })
-export class CTFilterTypeComponent implements OnInit {
+export class CTFilterTypeSubjectComponent implements OnInit {
   isMenuOpened: boolean;
-  selectedFilter: FilterType;
-  filters: FilterType[];
+  selectedFilter: FilterTypeSubject;
+  filters: FilterTypeSubject[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
   ) {
     this.isMenuOpened = false;
-    this.selectedFilter = "All Type";
+    this.selectedFilter = "All Type Subject";
     this.filters = [];
   }
 
   ngOnInit(): void {
     this.selectedFilter = this.initializeSelectedFilter(this.activatedRoute);
     this.filters = [
-      "All Type",
+      "All Type Subject",
       "Black List",
       "Sanction",
       "Verdict",
     ]
   }
 
-  private initializeSelectedFilter(activatedRoute: ActivatedRoute): FilterType {
+  private initializeSelectedFilter(activatedRoute: ActivatedRoute): FilterTypeSubject {
     const queryParams = activatedRoute.snapshot.queryParams;
-    const result = queryParams["type"];
+    const result = queryParams["typeSubject"];
 
     if (!result) { return this.selectedFilter; }
 
-    return result as FilterType;
+    return result as FilterTypeSubject;
   }
 }

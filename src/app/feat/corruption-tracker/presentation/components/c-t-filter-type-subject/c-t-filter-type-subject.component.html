@@ -1,11 +1,11 @@
 <button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
-  <span>{{ selectedFilter === 'All Type' ? 'Type' : selectedFilter }}</span>
+  <span>{{ selectedFilter === 'All Type Subject' ? 'Type' : selectedFilter }}</span>
   <mat-icon [fontIcon]="isMenuOpened ? 'expand_more' : 'expand_less'"></mat-icon>
 </button>
 <mat-menu #menu="matMenu" (click)="$event.stopPropagation();">
   @for (filter of filters; track filter) {
   <a (click)="$event.stopPropagation(); selectedFilter = filter;" routerLink="."
-    [queryParams]="{'type': filter === 'All Type' ? undefined : filter }" queryParamsHandling="merge">
+    [queryParams]="{'typeSubject': filter === 'All Type Subject' ? undefined : filter }" queryParamsHandling="merge">
     <div>
       <span>{{ filter }}</span>
       <mat-icon [fontIcon]="filter === selectedFilter ? 'radio_button_checked' : 'radio_button_unchecked'"></mat-icon>
