@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "hackcorruption-stg": {
+      "hosting": {
+        "hackcorruption-angular": [
+          "hackcorruption-stg"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "hackcorruption-stg"
+  }
+}
