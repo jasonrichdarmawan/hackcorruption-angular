@@ -57,31 +57,35 @@ export class CTDetailPage implements OnInit {
     );
   }
 
-  formatDate(date: String): string {
-    // Convert month abbreviation to English
-    const indonesianMonths = {
-      'Jan': 'Januari',
-      'Feb': 'Februari',
-      'Mar': 'Maret',
-      'Apr': 'April',
-      'Mei': 'Mei',
-      'Jun': 'Juni',
-      'Jul': 'Juli',
-      'Ags': 'Agustus',
-      'Sep': 'September',
-      'Okt': 'Oktober',
-      'Nov': 'November',
-      'Des': 'Desember'
+  formatDate(dateRangeString: String): string {
+    const indonesianMonths: { [key: string]: string } = {
+      'Jan': 'Jan',
+      'Feb': 'Feb',
+      'Mar': 'Mar',
+      'Apr': 'Apr',
+      'Mei': 'May',
+      'Jun': 'Jun',
+      'Jul': 'Jul',
+      'Ags': 'Aug',
+      'Sep': 'Sep',
+      'Okt': 'Oct',
+      'Nov': 'Nov',
+      'Des': 'Dec'
     };
-
-    // Replace Indonesian month abbreviation with English
-    const formattedDateString = date.replace(/(\w{3}) (\d{4})/, (_, month: string, year) => {
-      const englishMonth: string = indonesianMonths[month];
-      return `${englishMonth} ${year}`;
+    
+    const formattedDateRange: string = dateRangeString.replace(/(\d{1,2} \w{3} \d{4}) s\/d (\d{1,2} \w{3} \d{4})/, (match, startDate, endDate) => {
+      const formatDateString = (dateString: string) => {
+        const [day, month, year] = dateString.split(' ');
+        const englishMonth = indonesianMonths[month];
+        return `${day} ${englishMonth} ${year}`;
+      };
+    
+      const formattedStartDate = formatDateString(startDate);
+      const formattedEndDate = formatDateString(endDate);
+    
+      return `${formattedStartDate} - ${formattedEndDate}`;
     });
-
-    // Parse the formatted string to a Date object
-    const dateObject = new Date(formattedDateString);
-    return dateObject.toISOString()
+    
+    return formattedDateRange;
   }
 }
