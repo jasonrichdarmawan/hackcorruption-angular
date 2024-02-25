@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CTFilterTypeSubjectComponent } from './c-t-filter-type-subject.component';
+import { CTFilterTypeSubjectComponent } from './c-t-filter-type.component';
 
 describe('CTFilterTypeSubjectComponent', () => {
   let component: CTFilterTypeSubjectComponent;

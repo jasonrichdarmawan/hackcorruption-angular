@@ -1,35 +1,35 @@
 import { Component, OnInit, Signal, WritableSignal, computed, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MergeFilterNationToQueryParamsPipe } from '../../pipes/merge-filter-nation-to-query-params/merge-filter-nation-to-query-params.pipe';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MergeFilterTypeToQueryParamsPipe } from '../../pipes/merge-filter-type-to-query-params/merge-filter-type-to-query-params.pipe';
 import { NgTemplateOutlet } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 
-export interface FilterNation {
-  value: FilterNationValue;
+export interface FilterType {
+  value: FilterTypeValue;
   checked: boolean;
 }
 
-export type FilterNationValue = "All Nation" | "Indonesia" | "Singapore" | "Malaysia";
+export type FilterTypeValue = "All Type" | "Verdict" | "Black List" | "Sanction";
 
 @Component({
-  selector: 'app-c-t-filter-nation',
+  selector: 'app-c-t-filter-type',
   standalone: true,
   imports: [
     MatButtonModule,
     MatMenuModule,
-    NgTemplateOutlet,
     MatIconModule,
-    MergeFilterNationToQueryParamsPipe,
     RouterLink,
+    MergeFilterTypeToQueryParamsPipe,
+    NgTemplateOutlet,
   ],
-  templateUrl: './c-t-filter-nation.component.html',
-  styleUrl: './c-t-filter-nation.component.scss'
+  templateUrl: './c-t-filter-type.component.html',
+  styleUrl: './c-t-filter-type.component.scss'
 })
-export class CTFilterNationComponent implements OnInit {
+export class CTFilterTypeSubjectComponent implements OnInit {
   isMenuOpened: boolean;
-  filters: WritableSignal<FilterNation[]>;
+  filters: WritableSignal<FilterType[]>;
   checkedFiltersLength: Signal<number>;
   formatFirstCheckedFilter: Signal<string>;
 
@@ -48,16 +48,14 @@ export class CTFilterNationComponent implements OnInit {
     this.formatFirstCheckedFilter = computed(() => this.filters().find(filter => filter.checked)?.value ?? "");
   }
 
-  private initializeFilters(
-    activatedRoute: ActivatedRoute,
-  ): WritableSignal<FilterNation[]> {
-    const filters: WritableSignal<FilterNation[]> = signal([
-      { value: "Indonesia", checked: false, },
-      { value: "Singapore", checked: false, },
-      { value: "Malaysia", checked: false, },
+  private initializeFilters(activatedRoute: ActivatedRoute): WritableSignal<FilterType[]> {
+    const filters: WritableSignal<FilterType[]> = signal([
+      { value: "Verdict", checked: false, },
+      { value: "Black List", checked: false, },
+      { value: "Sanction", checked: false, },
     ]);
 
-    const types = activatedRoute.snapshot.queryParamMap.getAll("nation");
+    const types = activatedRoute.snapshot.queryParamMap.getAll("type");
     if (types.length === 0) { return filters; }
 
     filters.update(value => {
@@ -73,7 +71,7 @@ export class CTFilterNationComponent implements OnInit {
     return filters;
   }
 
-  toggleFilter(filters: WritableSignal<FilterNation[]>, nation: string) {
+  toggleFilter(filters: WritableSignal<FilterType[]>, nation: string) {
     filters.update(value => {
       const index = value.findIndex(filter => filter.value === nation);
       if (index === -1) { return value; }

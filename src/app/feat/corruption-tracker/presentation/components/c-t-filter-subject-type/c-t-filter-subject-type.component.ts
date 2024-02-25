@@ -4,10 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-export type FilterSubject = "All Subject" | "Individual" | "Company";
+export type FilterSubjectType = "All Subject Type" | "Individual" | "Company";
 
 @Component({
-  selector: 'app-c-t-filter-subject',
+  selector: 'app-c-t-filter-subject-type',
   standalone: true,
   imports: [
     MatButtonModule,
@@ -15,37 +15,37 @@ export type FilterSubject = "All Subject" | "Individual" | "Company";
     MatIconModule,
     RouterLink,
   ],
-  templateUrl: './c-t-filter-subject.component.html',
-  styleUrl: './c-t-filter-subject.component.scss'
+  templateUrl: './c-t-filter-subject-type.component.html',
+  styleUrl: './c-t-filter-subject-type.component.scss'
 })
 export class CTFilterSubjectComponent implements OnInit {
   isMenuOpened: boolean;
-  selectedFilter: FilterSubject;
-  filters: FilterSubject[];
+  selectedFilter: FilterSubjectType;
+  filters: FilterSubjectType[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
   ) {
     this.isMenuOpened = false;
-    this.selectedFilter = "All Subject";
+    this.selectedFilter = "All Subject Type";
     this.filters = [];
   }
 
   ngOnInit(): void {
     this.selectedFilter = this.initializeSelectedFilter(this.activatedRoute);
     this.filters = [
-      "All Subject",
+      "All Subject Type",
       "Individual",
       "Company",
     ];
   }
 
-  private initializeSelectedFilter(activatedRoute: ActivatedRoute): FilterSubject {
+  private initializeSelectedFilter(activatedRoute: ActivatedRoute): FilterSubjectType {
     const queryParams = activatedRoute.snapshot.queryParams;
-    const result = queryParams["subject"];
+    const result = queryParams["subjectType"];
 
     if (!result) { return this.selectedFilter; }
 
-    return result as FilterSubject;
+    return result as FilterSubjectType;
   }
 }

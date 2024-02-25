@@ -1,22 +1,41 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FilterNationValue } from '../c-t-filter-nation/c-t-filter-nation.component';
-import { FilterSubject } from '../c-t-filter-subject/c-t-filter-subject.component';
-import { FilterTypeSubject } from '../c-t-filter-type-subject/c-t-filter-type-subject.component';
+import { FilterSubjectType } from '../c-t-filter-subject-type/c-t-filter-subject-type.component';
+import { FilterTypeValue } from '../c-t-filter-type/c-t-filter-type.component';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MatTableModule } from '@angular/material/table';
+
+export interface CaseModel {
+  subject: string;
+  subject_type: "Individual" | "Company";
+  person_in_charge: string;
+  year: number;
+  type: string;
+  decision_number: string;
+  nation: string;
+  source: string;
+  link: string;
+  summary: string;
+  punishment_duration: string;
+  beneficiary_ownership: string;
+}
 
 @Component({
   selector: 'app-c-t-table',
   standalone: true,
-  imports: [],
+  imports: [
+    MatTableModule,
+  ],
   templateUrl: './c-t-table.component.html',
   styleUrl: './c-t-table.component.scss'
 })
 export class CTTableComponent implements OnInit, OnDestroy {
   subscriptions: Subscription;
 
-  filterSubject: FilterSubject;
-  filterTypeSubject: FilterTypeSubject;
+  keyword: string;
+  filterSubjectType: FilterSubjectType;
+  filterType: FilterTypeValue;
   filterYear: string;
   filterNation: FilterNationValue;
 
@@ -25,13 +44,16 @@ export class CTTableComponent implements OnInit, OnDestroy {
   ) {
     this.subscriptions = new Subscription();
 
-    this.filterSubject = "All Subject";
-    this.filterTypeSubject = "All Type Subject";
+    this.keyword = "";
+    this.filterSubjectType = "All Subject Type";
+    this.filterType = "All Type";
     this.filterYear = "";
     this.filterNation = "All Nation";
   }
 
   ngOnInit(): void {
+    const keywordSubscription = this.initializeKeywordSubscription(this.activatedRoute);
+    this.subscriptions.add(keywordSubscription);
     const filterSubjectSubscription = this.initializeFilterSubjectSubscription(this.activatedRoute);
     this.subscriptions.add(filterSubjectSubscription);
     const filterTypeSubjectSubscription = this.initializeFilterTypeSubjectSubscription(this.activatedRoute);
@@ -45,17 +67,24 @@ export class CTTableComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
+
+  private initializeKeywordSubscription(activatedRoute: ActivatedRoute) {
+    const subscription = activatedRoute.queryParams.subscribe(queryParams => {
+      this.keyword = queryParams["keyword"];
+    });
+    return subscription;
+  }
   
   private initializeFilterSubjectSubscription(activatedRoute: ActivatedRoute) {
     const subscription = activatedRoute.queryParams.subscribe(queryParams => {
-      this.filterSubject = queryParams["subject"];
+      this.filterSubjectType = queryParams["subjectType"];
     });
     return subscription;
   }
 
   private initializeFilterTypeSubjectSubscription(activatedRoute: ActivatedRoute) {
     const subscription = activatedRoute.queryParams.subscribe(queryParams => {
-      this.filterTypeSubject = queryParams["typeSubject"];
+      this.filterType = queryParams["typeSubject"];
     })
     return subscription;
   }

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FilterNation, FilterNationValue } from '../components/c-t-filter-nation/c-t-filter-nation.component';
+import { FilterNation, FilterNationValue } from '../../components/c-t-filter-nation/c-t-filter-nation.component';
 import { Params } from '@angular/router';
 
 @Pipe({
