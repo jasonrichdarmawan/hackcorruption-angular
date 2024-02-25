@@ -1,14 +1,27 @@
 <button mat-button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
-  <span>{{ selectedFilter === 'All Subject Type' ? 'Subject Type' : selectedFilter }}</span>
+  <ng-template #title let-count="count" [ngTemplateOutlet]="title"
+    [ngTemplateOutletContext]="{ count: checkedFiltersLength() }">
+    @switch (count) {
+    @case (0) {
+    <span>Subject Type</span>
+    }
+    @case (1) {
+    <span>{{ formatFirstCheckedFilter() }}</span>
+    }
+    @default {
+    <span>Subject Type ({{ count }})</span>
+    }
+    }
+  </ng-template>
   <mat-icon [fontIcon]="isMenuOpened ? 'expand_more' : 'expand_less'"></mat-icon>
 </button>
-<mat-menu #menu="matMenu" (click)="$event.stopPropagation();">
-  @for (filter of filters; track filter) {
-  <a mat-menu-item (click)="$event.stopPropagation(); selectedFilter = filter;" routerLink="."
-    [queryParams]="{'subjectType': filter === 'All Subject Type' ? undefined : filter }" queryParamsHandling="merge">
+<mat-menu #menu="matMenu" (click)="$event.stopPropagation()">
+  @for (filter of filters(); track filter.value) {
+  <a mat-menu-item (click)="$event.stopPropagation(); toggleFilter(filters, filter.value)" routerLink="."
+    [queryParams]="filters() | mergeFilterSubjectTypeToQueryParams: filter.value: filter.checked: activatedRoute.snapshot.queryParams">
     <div>
-      <span>{{ filter }}</span>
-      <mat-icon [fontIcon]="filter === selectedFilter ? 'radio_button_checked' : 'radio_button_unchecked'"></mat-icon>
+      <span>{{ filter.value }}</span>
+      <mat-icon [fontIcon]="filter.checked ? 'check_box' : 'check_box_outline_blank'"></mat-icon>
     </div>
   </a>
   }

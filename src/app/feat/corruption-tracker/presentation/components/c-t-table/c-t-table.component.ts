@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FilterNationValue } from '../c-t-filter-nation/c-t-filter-nation.component';
-import { FilterSubjectType } from '../c-t-filter-subject-type/c-t-filter-subject-type.component';
+import { FilterSubjectType, FilterSubjectTypeValue } from '../c-t-filter-subject-type/c-t-filter-subject-type.component';
 import { FilterTypeValue } from '../c-t-filter-type/c-t-filter-type.component';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -34,9 +34,10 @@ export class CTTableComponent implements OnInit, OnDestroy {
   subscriptions: Subscription;
 
   keyword: string;
-  filterSubjectType: FilterSubjectType;
+  filterSubjectType: FilterSubjectTypeValue;
   filterType: FilterTypeValue;
-  filterYear: string;
+  filterFrom: string;
+  filterTo: string;
   filterNation: FilterNationValue;
 
   constructor(
@@ -47,7 +48,8 @@ export class CTTableComponent implements OnInit, OnDestroy {
     this.keyword = "";
     this.filterSubjectType = "All Subject Type";
     this.filterType = "All Type";
-    this.filterYear = "";
+    this.filterFrom = "";
+    this.filterTo = "";
     this.filterNation = "All Nation";
   }
 
@@ -56,10 +58,12 @@ export class CTTableComponent implements OnInit, OnDestroy {
     this.subscriptions.add(keywordSubscription);
     const filterSubjectSubscription = this.initializeFilterSubjectSubscription(this.activatedRoute);
     this.subscriptions.add(filterSubjectSubscription);
-    const filterTypeSubjectSubscription = this.initializeFilterTypeSubjectSubscription(this.activatedRoute);
+    const filterTypeSubjectSubscription = this.initializeFilterTypeSubscription(this.activatedRoute);
     this.subscriptions.add(filterTypeSubjectSubscription);
-    const filterYearSubscription = this.initializeFilterYearSubscription(this.activatedRoute);
-    this.subscriptions.add(filterYearSubscription);
+    const filterFromSubscription = this.initializeFilterFromSubscription(this.activatedRoute);
+    this.subscriptions.add(filterFromSubscription);
+    const filterToSubscription = this.initializeFilterToSubscription(this.activatedRoute);
+    this.subscriptions.add(filterToSubscription);
     const filterNationSubscription = this.initializeFilterNationSubscription(this.activatedRoute);
     this.subscriptions.add(filterNationSubscription);
   }
@@ -82,16 +86,23 @@ export class CTTableComponent implements OnInit, OnDestroy {
     return subscription;
   }
 
-  private initializeFilterTypeSubjectSubscription(activatedRoute: ActivatedRoute) {
+  private initializeFilterTypeSubscription(activatedRoute: ActivatedRoute) {
     const subscription = activatedRoute.queryParams.subscribe(queryParams => {
-      this.filterType = queryParams["typeSubject"];
+      this.filterType = queryParams["type"];
     })
     return subscription;
   }
 
-  private initializeFilterYearSubscription(activatedRoute: ActivatedRoute) {
+  private initializeFilterFromSubscription(activatedRoute: ActivatedRoute) {
     const subscription = activatedRoute.queryParams.subscribe(queryParams => {
-      this.filterYear = queryParams["year"];
+      this.filterFrom = queryParams["from"];
+    })
+    return subscription;
+  }
+
+  private initializeFilterToSubscription(activatedRoute: ActivatedRoute) {
+    const subscription = activatedRoute.queryParams.subscribe(queryParams => {
+      this.filterTo = queryParams["to"];
     })
     return subscription;
   }
