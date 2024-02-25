@@ -3,7 +3,7 @@ import { FilterSubjectTypeValue } from '../../../presentation/components/c-t-fil
 import { FilterTypeValue } from '../../../presentation/components/c-t-filter-type/c-t-filter-type.component';
 import { FilterNationValue } from '../../../presentation/components/c-t-filter-nation/c-t-filter-nation.component';
 import { Observable, map, of } from 'rxjs';
-import { DocumentData, Firestore, Query, collection, collectionData, query, where } from '@angular/fire/firestore';
+import { DocumentData, Firestore, Query, collection, collectionData, limit, query, where } from '@angular/fire/firestore';
 
 export interface GetCasesFirestoreDataSourceParams {
   keyword?: string;
@@ -40,7 +40,7 @@ export class GetCasesFirestoreDataSourceService {
   get(params: GetCasesFirestoreDataSourceParams): Observable<GetCasesFirestoreDataSourceModel[]> {
     const casesCollection = collection(this.firestore, 'cases');
 
-    let queryRef: Query<DocumentData, DocumentData> = query(casesCollection);
+    let queryRef: Query<DocumentData, DocumentData> = query(casesCollection, limit(10));
 
     if (params.keyword) {
       queryRef = query(casesCollection, where('subject', '==', params.keyword));
