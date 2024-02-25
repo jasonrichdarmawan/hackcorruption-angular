@@ -11,7 +11,7 @@ export interface FilterType {
   checked: boolean;
 }
 
-export type FilterTypeValue = "All Type" | "Verdict" | "Black List" | "Sanction";
+export type FilterTypeValue = "All Type" | "verdict" | "blacklist" | "sanction";
 
 @Component({
   selector: 'app-c-t-filter-type',
@@ -50,9 +50,9 @@ export class CTFilterTypeSubjectComponent implements OnInit {
 
   private initializeFilters(activatedRoute: ActivatedRoute): WritableSignal<FilterType[]> {
     const filters: WritableSignal<FilterType[]> = signal([
-      { value: "Verdict", checked: false, },
-      { value: "Black List", checked: false, },
-      { value: "Sanction", checked: false, },
+      { value: "verdict", checked: false, },
+      { value: "blacklist", checked: false, },
+      { value: "sanction", checked: false, },
     ]);
 
     const types = activatedRoute.snapshot.queryParamMap.getAll("type");
