@@ -19,7 +19,7 @@ export interface GetCaseFirestoreDataSourceModel {
   link?: string;
   summary?: string;
   punishment_duration?: string;
-  beneficiary_ownership?: string;
+  beneficary_ownership?: string;
 }
 
 @Injectable()
