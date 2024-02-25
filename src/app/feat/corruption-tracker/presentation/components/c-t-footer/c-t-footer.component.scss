@@ -1,10 +1,14 @@
 .footer {
-
+    background-color: #fff4fb; 
+    margin: 0;
+    padding: 2rem 0;
+    
     & .__title {
-        font-size: xx-large;
+        font-size: 24px;
         font-weight: bold;
-        margin-left: 100px;
         padding-bottom: 40px;
+        text-align: center;
+        font-family: 'DM Sans', sans-serif;
     }
 
     & .__images {

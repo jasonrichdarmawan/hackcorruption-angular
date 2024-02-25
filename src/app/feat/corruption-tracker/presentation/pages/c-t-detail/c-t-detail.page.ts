@@ -56,4 +56,32 @@ export class CTDetailPage implements OnInit {
       }
     );
   }
+
+  formatDate(date: String): string {
+    // Convert month abbreviation to English
+    const indonesianMonths = {
+      'Jan': 'Januari',
+      'Feb': 'Februari',
+      'Mar': 'Maret',
+      'Apr': 'April',
+      'Mei': 'Mei',
+      'Jun': 'Juni',
+      'Jul': 'Juli',
+      'Ags': 'Agustus',
+      'Sep': 'September',
+      'Okt': 'Oktober',
+      'Nov': 'November',
+      'Des': 'Desember'
+    };
+
+    // Replace Indonesian month abbreviation with English
+    const formattedDateString = date.replace(/(\w{3}) (\d{4})/, (_, month: string, year) => {
+      const englishMonth: string = indonesianMonths[month];
+      return `${englishMonth} ${year}`;
+    });
+
+    // Parse the formatted string to a Date object
+    const dateObject = new Date(formattedDateString);
+    return dateObject.toISOString()
+  }
 }

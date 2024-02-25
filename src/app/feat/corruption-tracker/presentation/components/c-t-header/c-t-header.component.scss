@@ -1,0 +1,21 @@
+.header {
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+
+  & .nav-item {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    text-decoration: none;
+    transition-duration: 200ms;
+    transition: all;
+
+    &:hover {
+      color: #00000044;
+    }
+  }
+}
