@@ -3,7 +3,7 @@
     "hackcorruption-stg": {
       "hosting": {
         "hackcorruption-angular": [
-          "hackcorruption-stg"
+          "openbo-stg"
         ]
       }
     }
