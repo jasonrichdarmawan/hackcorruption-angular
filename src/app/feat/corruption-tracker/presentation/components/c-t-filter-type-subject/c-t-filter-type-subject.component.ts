@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -9,6 +10,7 @@ export type FilterTypeSubject = "All Type Subject" | "Verdict" | "Black List" | 
   selector: 'app-c-t-filter-type',
   standalone: true,
   imports: [
+    MatButtonModule,
     MatMenuModule,
     MatIconModule,
     RouterLink,

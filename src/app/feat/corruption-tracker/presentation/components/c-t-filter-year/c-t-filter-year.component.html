@@ -1,21 +1,43 @@
-<button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
-  @if (!year) {
+<button mat-button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
+  @switch (fromTo) {
+  @case (fromTo.from && !fromTo.to ? fromTo : '') {
+  <span>{{ fromTo.from }}-Newest</span>
+  }
+  @case (!fromTo.from && fromTo.to ? fromTo : '') {
+  <span>Terlama-{{ fromTo.to }}</span>
+  }
+  @case (fromTo.from && fromTo.to ? fromTo : '') {
+  <span>{{ fromTo.from }}-{{ fromTo.to }}</span>
+  }
+  @default {
   <span>Year</span>
-  } @else {
-  <span>{{ year }}</span>
+  }
   }
   <mat-icon [fontIcon]="isMenuOpened ? 'expand_more' : 'expand_less'"></mat-icon>
 </button>
 <mat-menu #menu="matMenu" (click)="$event.stopPropagation();">
-  <div (keydown.enter)="onInputBlur(inputYear); updateQueryParams(year, activatedRoute, router)"
+  <div mat-menu-item>
+    <div (keydown.enter)="onInputBlur(inputFrom, 'from'); updateQueryParams(fromTo, activatedRoute, router)"
     (click)="$event.stopPropagation();">
-    <span>Year</span>
-    <input #inputYear type="number" min="1900" max="2100" [value]="year" placeholder="Year"
-      (blur)="onInputBlur(inputYear); updateQueryParams(year, activatedRoute, router);">
+    <span>From</span>
+    <input #inputFrom type="number" min="1900" max="2100" [value]="fromTo.from" placeholder="Year"
+      (blur)="onInputBlur(inputFrom, 'from'); updateQueryParams(fromTo, activatedRoute, router);">
     @defer {
-    @if (!inputYear.validity.valid) {
-    <span>{{ inputYear.validationMessage }}</span>
+    @if (!inputFrom.validity.valid) {
+    <span>{{ inputFrom.validationMessage }}</span>
     }
     }
+  </div>
+  <div (keydown.enter)="onInputBlur(inputTo, 'to'); updateQueryParams(fromTo, activatedRoute, router)"
+    (click)="$event.stopPropagation();">
+    <span>To</span>
+    <input #inputTo type="number" min="1900" max="2100" [value]="fromTo.to" placeholder="Year"
+      (blur)="onInputBlur(inputTo, 'to'); updateQueryParams(fromTo, activatedRoute, router);">
+    @defer {
+    @if (!inputTo.validity.valid) {
+    <span>{{ inputTo.validationMessage }}</span>
+    }
+    }
+  </div>
   </div>
 </mat-menu>

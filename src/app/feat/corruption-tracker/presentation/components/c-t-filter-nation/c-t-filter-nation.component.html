@@ -1,4 +1,4 @@
-<button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
+<button mat-button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
   <ng-template #title let-count="count" [ngTemplateOutlet]="title"
     [ngTemplateOutletContext]="{ count: checkedFiltersLength() }">
     @switch (count) {
@@ -17,7 +17,7 @@
 </button>
 <mat-menu #menu="matMenu" (click)="$event.stopPropagation()">
   @for (filter of filters(); track filter.value) {
-  <a (click)="$event.stopPropagation(); toggleFilter(filters, filter.value)" routerLink="."
+  <a mat-menu-item (click)="$event.stopPropagation(); toggleFilter(filters, filter.value)" routerLink="."
     [queryParams]="filters() | mergeFilterNationToQueryParams: filter.value: filter.checked: activatedRoute.snapshot.queryParams">
     <div>
       <span>{{ filter.value }}</span>

@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-c-t-search-bar',
   standalone: true,
-  imports: [],
+  imports: [
+    MatInputModule,
+    MatButtonModule,
+  ],
   templateUrl: './c-t-search-bar.component.html',
   styleUrl: './c-t-search-bar.component.scss'
 })

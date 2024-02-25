@@ -2,11 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+
+interface FromTo {
+  from?: string;
+  to?: string;
+}
+
+export type FromToType = "from" | "to";
 
 @Component({
   selector: 'app-c-t-filter-year',
   standalone: true,
   imports: [
+    MatButtonModule,
     MatMenuModule,
     MatIconModule,
   ],
@@ -15,47 +24,73 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class CTFilterYearComponent implements OnInit {
   isMenuOpened: boolean;
-  year: string;
+  fromTo: FromTo;
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public router: Router,
   ) {
     this.isMenuOpened = false;
-    this.year = "";
+    this.fromTo = {};
   }
 
-  private initializeYear(activatedRoute: ActivatedRoute): string {
+  private initializeYear(activatedRoute: ActivatedRoute): FromTo {
     const queryParams = activatedRoute.snapshot.queryParams;
-    const result = queryParams["year"];
+    const from = queryParams["from"];
+    const to = queryParams["to"];
+
+    const result: FromTo = {
+      from: from,
+      to: to,
+    };
+
     return result;
   }
 
   ngOnInit(): void {
-    this.year = this.initializeYear(this.activatedRoute);
+    this.fromTo = this.initializeYear(this.activatedRoute);
   }
 
-  onInputBlur(input: HTMLInputElement) {
-    if (!input.validity.valid) {
-      input.value = "";
-      this.year = "";
-      return;
+  onInputBlur(input: HTMLInputElement, type: FromToType) {
+    switch (type) {
+      case "from":
+        if (!input.validity.valid) {
+          input.value = "";
+          this.fromTo.from = undefined;
+          return;
+        }
+      
+        this.fromTo.from = input.value;
+        return;
+      case "to":
+        if (!input.validity.valid) {
+          input.value = "";
+          this.fromTo.to = undefined;
+          return;
+        }
+
+        this.fromTo.to = input.value;
+        return;
     }
-
-    this.year = input.value;
   }
 
-  updateQueryParams(year: string, activatedRoute: ActivatedRoute, router: Router) {
+  updateQueryParams(fromTo: FromTo, activatedRoute: ActivatedRoute, router: Router) {
     const currentQueryParams = activatedRoute.snapshot.queryParams;
 
     let queryParams: Params = {
       ...currentQueryParams,
     }
 
-    if (!year) {
-      queryParams["year"] = undefined;
+    if (fromTo.from) {
+      queryParams['from'] = fromTo.from;
     } else {
-      queryParams["year"] = this.year;
+      queryParams['from'] = undefined;
+    }
+
+    if (fromTo.to) {
+      queryParams['to'] = fromTo.to;
+    } else {
+      queryParams['to'] = undefined;
     }
 
     router.navigate(

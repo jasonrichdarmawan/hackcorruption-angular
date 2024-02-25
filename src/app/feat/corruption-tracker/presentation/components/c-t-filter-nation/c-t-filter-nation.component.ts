@@ -4,18 +4,20 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MergeFilterNationToQueryParamsPipe } from '../../pipes/merge-filter-nation-to-query-params.pipe';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgTemplateOutlet } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 export interface FilterNation {
   value: FilterNationValue;
   checked: boolean;
 }
 
-export type FilterNationValue = "Indonesia" | "Singapore" | "Malaysia";
+export type FilterNationValue = "All Nation" | "Indonesia" | "Singapore" | "Malaysia";
 
 @Component({
   selector: 'app-c-t-filter-nation',
   standalone: true,
   imports: [
+    MatButtonModule,
     MatMenuModule,
     NgTemplateOutlet,
     MatIconModule,
