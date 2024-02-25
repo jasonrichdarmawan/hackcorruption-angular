@@ -1,0 +1,8 @@
+.table {
+  & .__row {
+    &:hover {
+      cursor: pointer;
+      background: color-mix(in srgb, black 5%, transparent);
+    }
+  }
+}

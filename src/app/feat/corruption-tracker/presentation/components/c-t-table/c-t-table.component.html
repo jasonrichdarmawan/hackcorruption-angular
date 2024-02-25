@@ -1,0 +1,54 @@
+<table mat-table class="table" [dataSource]="dataSource$">
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef>Subject</th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['detail', element.id ]">{{ element.subject }}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="subjectType">
+    <th mat-header-cell *matHeaderCellDef>Subject Type</th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['detail', element.id ]">{{ element.subject_type }}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="personInCharge">
+    <th mat-header-cell *matHeaderCellDef>Person In Charge</th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['detail', element.id ]">{{ element.person_in_charge }}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="year">
+    <th mat-header-cell *matHeaderCellDef>Year</th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['detail', element.id ]">{{ element.year }}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['detail', element.id ]">{{ element.type }}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nation">
+    <th mat-header-cell *matHeaderCellDef>Nation</th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['detail', element.id ]">{{ element.nation }}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="beneficiaryOwnership">
+    <th mat-header-cell *matHeaderCellDef>Beneficiary Ownership</th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['detail', element.id ]">{{ element.beneficiary_ownership }}</a>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row class="__row" *matRowDef="let row; columns: displayedColumns"
+    (click)="navigateByClick(router, ['detail', row.id], activatedRoute)"></tr>
+</table>
