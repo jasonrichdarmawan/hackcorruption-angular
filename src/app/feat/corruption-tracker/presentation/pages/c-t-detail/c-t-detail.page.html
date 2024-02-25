@@ -1,1 +1,56 @@
-<p>c-t-detail works!</p>
+<div class="main-detail">
+  @if (dataSource$ | async; as dataSource) {
+    <mat-card class="card-detail">
+      <mat-card-content>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td colspan="2" class="w-25 font-bold"><h1>{{ dataSource.subject }}</h1></td>
+              </tr>
+              <tr>
+                <td class="w-25 font-bold">Subject Type</td>
+                <td>{{ toTitleCase(dataSource.subject_type ?? "") }}</td>
+              </tr>
+              <tr>
+                <td class="w-25 font-bold">Person in Charge</td>
+                <td>{{ dataSource.person_in_charge ?? "-" }}</td>
+              </tr>
+              <tr>
+                <td class="w-25 font-bold">Year</td>
+                <td>{{ dataSource.year }}</td>
+              </tr>
+              <tr>
+                <td class="w-25 font-bold">Type</td>
+                <td>{{ toTitleCase(dataSource.type ?? '') }}</td>
+              </tr>
+              <tr>
+                <td class="w-25 font-bold">Decision Number</td>
+                <td>{{ dataSource.decision_number }}</td>
+              </tr>
+              <tr>
+                <td class="w-25 font-bold">Nation</td>
+                <td>{{ dataSource.nation }}</td>
+              </tr>
+              <tr>
+                <td class="w-25 font-bold">Duration</td>
+                <td>{{ dataSource.punishment_duration }}</td>
+              </tr>
+              <tr>
+                <td class="w-25 font-bold">Beneficiary Ownership</td>
+                <td>{{ dataSource.beneficiary_ownership ?? "-" }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 class="case-summary-title">Summary</h3>
+          <p class="case-summary-description">
+            {{ dataSource.summary }}
+          </p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card-source">
+      <mat-card-content>
+        <a class="source-btn" [href]="dataSource.link" target="_blank" mat-raised-button color="primary">Source</a>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>
