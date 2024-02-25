@@ -43,7 +43,9 @@ export class GetCasesFirestoreDataSourceService {
     let queryRef: Query<DocumentData, DocumentData> = query(casesCollection, limit(10));
 
     if (params.keyword) {
-      queryRef = query(casesCollection, where('subject', '==', params.keyword));
+      queryRef = query(casesCollection, where('subject', '>=', params.keyword));
+      queryRef = query(casesCollection, where('subject', '>=', params.keyword.toLowerCase()));
+      queryRef = query(casesCollection, where('subject', '>=', params.keyword.toUpperCase()));
     }
 
     if (params.filterSubjectType && params.filterSubjectType.length > 0) {
