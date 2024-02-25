@@ -2,30 +2,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FilterNationValue } from '../c-t-filter-nation/c-t-filter-nation.component';
 import { FilterSubjectType, FilterSubjectTypeValue } from '../c-t-filter-subject-type/c-t-filter-subject-type.component';
 import { FilterTypeValue } from '../c-t-filter-type/c-t-filter-type.component';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
-
-export interface CaseModel {
-  subject: string;
-  subject_type: "Individual" | "Company";
-  person_in_charge: string;
-  year: number;
-  type: string;
-  decision_number: string;
-  nation: string;
-  source: string;
-  link: string;
-  summary: string;
-  punishment_duration: string;
-  beneficiary_ownership: string;
-}
+import { GetCasesFirestoreDataSourceModel, GetCasesFirestoreDataSourceService } from '../../../data/datasources/get-cases-firestore-data-source/get-cases-firestore-data-source.service';
 
 @Component({
   selector: 'app-c-t-table',
   standalone: true,
   imports: [
     MatTableModule,
+    RouterLink,
+  ],
+  providers: [
+    GetCasesFirestoreDataSourceService,
   ],
   templateUrl: './c-t-table.component.html',
   styleUrl: './c-t-table.component.scss'
@@ -40,8 +30,13 @@ export class CTTableComponent implements OnInit, OnDestroy {
   filterTo: string;
   filterNation: FilterNationValue;
 
+  displayedColumns: string[];
+  dataSource$: Observable<GetCasesFirestoreDataSourceModel[]>;
+
   constructor(
-    private activatedRoute: ActivatedRoute,
+    public activatedRoute: ActivatedRoute,
+    private getCases: GetCasesFirestoreDataSourceService,
+    public router: Router,
   ) {
     this.subscriptions = new Subscription();
 
@@ -51,6 +46,9 @@ export class CTTableComponent implements OnInit, OnDestroy {
     this.filterFrom = "";
     this.filterTo = "";
     this.filterNation = "All Nation";
+
+    this.displayedColumns = ["subject", "subjectType", "personInCharge", "year", "nation", "beneficiaryOwnership"];
+    this.dataSource$ = new Observable();
   }
 
   ngOnInit(): void {
@@ -66,6 +64,8 @@ export class CTTableComponent implements OnInit, OnDestroy {
     this.subscriptions.add(filterToSubscription);
     const filterNationSubscription = this.initializeFilterNationSubscription(this.activatedRoute);
     this.subscriptions.add(filterNationSubscription);
+
+    this.dataSource$ = this.getCases.get({});
   }
 
   ngOnDestroy(): void {
@@ -112,5 +112,9 @@ export class CTTableComponent implements OnInit, OnDestroy {
       this.filterNation = queryParams["nation"];
     })
     return subscription;
+  }
+
+  navigateByClick(router: Router, routerLink: string[], route: ActivatedRoute) {
+    router.navigate(routerLink, { relativeTo: route });
   }
 }
