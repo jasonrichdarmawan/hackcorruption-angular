@@ -5,11 +5,15 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GetCaseFirestoreDataSourceModel, GetCaseFirestoreDataSourceService } from '../../../../services/get-case-firestore-data-source-service';
 import { AsyncPipe } from '@angular/common';
+import { CTHeaderComponent } from '../../components/c-t-header/c-t-header.component';
+import { CTFooterComponent } from '../../components/c-t-footer/c-t-footer.component';
 
 @Component({
   selector: 'app-c-t-detail',
   standalone: true,
   imports: [
+    CTHeaderComponent,
+    CTFooterComponent,
     MatCardModule,
     MatButtonModule,
     AsyncPipe
