@@ -11,7 +11,7 @@ export interface FilterSubjectType {
   checked: boolean;
 }
 
-export type FilterSubjectTypeValue = "All Subject Type" | "Individual" | "Company";
+export type FilterSubjectTypeValue = "All Subject Type" | "individual" | "company";
 
 @Component({
   selector: 'app-c-t-filter-subject-type',
@@ -50,8 +50,8 @@ export class CTFilterSubjectComponent implements OnInit {
 
   private initializeFilters(activatedRoute: ActivatedRoute): WritableSignal<FilterSubjectType[]> {
     const filters: WritableSignal<FilterSubjectType[]> = signal([
-      { value: "Individual", checked: false, },
-      { value: "Company", checked: false, },
+      { value: "individual", checked: false, },
+      { value: "company", checked: false, },
     ]);
 
     const types = activatedRoute.snapshot.queryParamMap.getAll("subjectType");
