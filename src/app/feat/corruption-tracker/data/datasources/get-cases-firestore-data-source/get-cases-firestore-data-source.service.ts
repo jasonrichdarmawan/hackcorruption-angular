@@ -3,12 +3,12 @@ import { FilterSubjectTypeValue } from '../../../presentation/components/c-t-fil
 import { FilterTypeValue } from '../../../presentation/components/c-t-filter-type/c-t-filter-type.component';
 import { FilterNationValue } from '../../../presentation/components/c-t-filter-nation/c-t-filter-nation.component';
 import { Observable, map, of } from 'rxjs';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { DocumentData, Firestore, Query, collection, collectionData, query, where } from '@angular/fire/firestore';
 
 export interface GetCasesFirestoreDataSourceParams {
   keyword?: string;
-  filterSubjectType?: FilterSubjectTypeValue;
-  filterType?: FilterTypeValue;
+  filterSubjectType?: FilterSubjectTypeValue | FilterSubjectTypeValue[];
+  filterType?: FilterTypeValue | FilterTypeValue[];
   filterFrom?: string;
   filterTo?: string;
   filterNation?: FilterNationValue;
@@ -40,7 +40,45 @@ export class GetCasesFirestoreDataSourceService {
   get(params: GetCasesFirestoreDataSourceParams): Observable<GetCasesFirestoreDataSourceModel[]> {
     const casesCollection = collection(this.firestore, 'cases');
 
-    const result = (collectionData(casesCollection, { idField: 'id' }) as Observable<GetCasesFirestoreDataSourceModel[]>);
+    let queryRef: Query<DocumentData, DocumentData> = query(casesCollection);
+
+    if (params.keyword) {
+      queryRef = query(casesCollection, where('subject', '==', params.keyword));
+    }
+
+    if (params.filterSubjectType && params.filterSubjectType.length > 0) {
+      if (Array.isArray(params.filterSubjectType)) {
+        queryRef = query(queryRef, where('subject_type', 'in', params.filterSubjectType));
+      } else {
+        queryRef = query(queryRef, where('subject_type', '==', params.filterSubjectType));
+      }
+    }
+
+    if (params.filterType && params.filterType.length > 0) {
+      if (Array.isArray(params.filterType)) {
+        queryRef = query(queryRef, where('type', 'in', params.filterType));
+      } else {
+        queryRef = query(queryRef, where('type', '==', params.filterType));
+      }
+    }
+
+    if (params.filterFrom) {
+      queryRef = query(queryRef, where('year', '>=', params.filterFrom));
+    }
+
+    if (params.filterTo) {
+      queryRef = query(queryRef, where('year', '<=', params.filterTo));
+    }
+
+    if (params.filterNation && params.filterNation.length > 0) {
+      if (Array.isArray(params.filterNation)) {
+        queryRef = query(queryRef, where('nation', 'in', params.filterNation));
+      } else {
+        queryRef = query(queryRef, where('nation', '==', params.filterNation));
+      }
+    }
+
+    const result = (collectionData(queryRef, { idField: 'id' }) as Observable<GetCasesFirestoreDataSourceModel[]>);
 
     return result;
   }

@@ -47,25 +47,31 @@ export class CTTableComponent implements OnInit, OnDestroy {
     this.filterTo = "";
     this.filterNation = "All Nation";
 
-    this.displayedColumns = ["subject", "subjectType", "personInCharge", "year", "nation", "beneficiaryOwnership"];
+    this.displayedColumns = ["subject", "subjectType", "personInCharge", "type", "year", "nation", "beneficiaryOwnership"];
     this.dataSource$ = new Observable();
   }
 
   ngOnInit(): void {
     const keywordSubscription = this.initializeKeywordSubscription(this.activatedRoute);
     this.subscriptions.add(keywordSubscription);
+    
     const filterSubjectSubscription = this.initializeFilterSubjectSubscription(this.activatedRoute);
     this.subscriptions.add(filterSubjectSubscription);
+    
     const filterTypeSubjectSubscription = this.initializeFilterTypeSubscription(this.activatedRoute);
     this.subscriptions.add(filterTypeSubjectSubscription);
+    
     const filterFromSubscription = this.initializeFilterFromSubscription(this.activatedRoute);
     this.subscriptions.add(filterFromSubscription);
+    
     const filterToSubscription = this.initializeFilterToSubscription(this.activatedRoute);
     this.subscriptions.add(filterToSubscription);
+    
     const filterNationSubscription = this.initializeFilterNationSubscription(this.activatedRoute);
     this.subscriptions.add(filterNationSubscription);
 
-    this.dataSource$ = this.getCases.get({});
+    const getCasesSubscription = this.initializeGetCasesSubscription(this.activatedRoute, this.getCases);
+    this.subscriptions.add(getCasesSubscription);
   }
 
   ngOnDestroy(): void {
@@ -110,6 +116,20 @@ export class CTTableComponent implements OnInit, OnDestroy {
   private initializeFilterNationSubscription(activatedRoute: ActivatedRoute) {
     const subscription = activatedRoute.queryParams.subscribe(queryParams => {
       this.filterNation = queryParams["nation"];
+    })
+    return subscription;
+  }
+
+  private initializeGetCasesSubscription(activatedRoute: ActivatedRoute, getCases: GetCasesFirestoreDataSourceService) {
+    const subscription = activatedRoute.queryParams.subscribe(_ => {
+      this.dataSource$ = getCases.get({
+        keyword: this.keyword,
+        filterSubjectType: this.filterSubjectType,
+        filterFrom: this.filterFrom,
+        filterTo: this.filterTo,
+        filterType: this.filterType,
+        filterNation: this.filterNation,
+      });
     })
     return subscription;
   }
