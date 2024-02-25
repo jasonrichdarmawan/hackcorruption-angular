@@ -1,0 +1,28 @@
+<button mat-button [matMenuTriggerFor]="menu" (menuOpened)="isMenuOpened = true;" (menuClosed)="isMenuOpened = false;">
+  <ng-template #title let-count="count" [ngTemplateOutlet]="title"
+    [ngTemplateOutletContext]="{ count: checkedFiltersLength() }">
+    @switch (count) {
+    @case (0) {
+    <span>Subject Type</span>
+    }
+    @case (1) {
+    <span>{{ formatFirstCheckedFilter() }}</span>
+    }
+    @default {
+    <span>Subject Type ({{ count }})</span>
+    }
+    }
+  </ng-template>
+  <mat-icon [fontIcon]="isMenuOpened ? 'expand_more' : 'expand_less'"></mat-icon>
+</button>
+<mat-menu #menu="matMenu" (click)="$event.stopPropagation()">
+  @for (filter of filters(); track filter.value) {
+  <a mat-menu-item (click)="$event.stopPropagation(); toggleFilter(filters, filter.value)" routerLink="."
+    [queryParams]="filters() | mergeFilterSubjectTypeToQueryParams: filter.value: filter.checked: activatedRoute.snapshot.queryParams">
+    <div>
+      <span>{{ filter.value }}</span>
+      <mat-icon [fontIcon]="filter.checked ? 'check_box' : 'check_box_outline_blank'"></mat-icon>
+    </div>
+  </a>
+  }
+</mat-menu>

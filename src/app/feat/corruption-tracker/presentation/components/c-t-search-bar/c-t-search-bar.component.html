@@ -1,0 +1,6 @@
+<mat-form-field>
+  <mat-label>Subject Name</mat-label>
+  <input matInput placeholder="Subject Name" [value]="keyword"
+    (keyup.enter)="updateQueryParams(searchInput.value, router)" #searchInput>
+</mat-form-field>
+<button mat-button (click)="updateQueryParams(searchInput.value, router)">Search</button>

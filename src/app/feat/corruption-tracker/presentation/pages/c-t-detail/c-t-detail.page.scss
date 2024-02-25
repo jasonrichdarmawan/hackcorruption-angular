@@ -1,0 +1,91 @@
+.main-detail {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  padding: 16px;
+  gap: 16px;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
+
+  & .card-detail {
+    width: 70%;
+    box-shadow: none;
+    border: 1px solid #ecedf2;
+
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+    }
+  
+    & h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+  
+    & .case-summary-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin: 1rem 0.5rem 0.2rem 0.5rem;
+    }
+  
+    & .case-summary-description {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      margin: 0 0.5rem;
+      margin-top: 8px;
+    }
+  
+    & .table {
+      width: 100%;
+      border-color: #dee2e6;
+      border-collapse: collapse;
+  
+      & td {
+        padding: 0.5rem 0.5rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+  
+        @media only screen and (max-width: 600px) {
+          padding: 0.5rem 0;
+        }
+      }
+  
+      & tr {
+        border-bottom: 1px solid #dee2e6;
+      }
+    }
+  
+    & .w-25 {
+      width: 250px;
+  
+      @media only screen and (max-width: 600px) {
+        width: 100px;
+      }
+    }
+  
+    & .font-bold {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+
+  & .card-source {
+    width: 30%;
+    box-shadow: none;
+    border: 1px solid #ecedf2;
+
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+    }
+
+    & .source-btn {
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+    }
+  }
+}
